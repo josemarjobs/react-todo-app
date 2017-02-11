@@ -13,13 +13,14 @@ describe('AddTodoForm', () => {
 
   describe('onFormSubmit', () => {
     it('adds a todo when valid text is entered', () => {
+      var todoText = 'do something';
       var spy = expect.createSpy();
       var addTodoForm = TestUtils.renderIntoDocument(<AddTodoForm onAddTodo={spy} />);
       var $el = $(ReactDOM.findDOMNode(addTodoForm));
       console.log($el)
-      addTodoForm.refs.text.value = 'do something';
+      addTodoForm.refs.text.value = todoText;
       TestUtils.Simulate.submit($el.find('form')[0])
-      expect(spy).toHaveBeenCalledWith('do something');
+      expect(spy).toHaveBeenCalledWith(todoText);
     })
 
     it('does not add a todo when invalid text is entered', () => {
