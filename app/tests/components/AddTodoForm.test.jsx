@@ -4,7 +4,7 @@ var TestUtils = require('react-addons-test-utils')
 var expect = require('expect')
 var $ = require('jQuery')
 
-var AddTodoForm = require('AddTodoForm')
+import {AddTodoForm} from 'AddTodoForm';
 
 describe('AddTodoForm', () => {
   it('should exist', () => {
@@ -12,19 +12,26 @@ describe('AddTodoForm', () => {
   })
 
   describe('onFormSubmit', () => {
-    it('adds a todo when valid text is entered', () => {
+    it('should dispatch ADD_TODO when valid text is entered', () => {
       var todoText = 'do something';
+      var action = {
+        type: 'ADD_TODO',
+        text: todoText
+      }
       var spy = expect.createSpy();
-      var addTodoForm = TestUtils.renderIntoDocument(<AddTodoForm onAddTodo={spy} />);
+      var addTodoForm = TestUtils.renderIntoDocument(
+        <AddTodoForm dispatch={spy} />
+      );
       var $el = $(ReactDOM.findDOMNode(addTodoForm));
       addTodoForm.refs.text.value = todoText;
       TestUtils.Simulate.submit($el.find('form')[0])
-      expect(spy).toHaveBeenCalledWith(todoText);
+
+      expect(spy).toHaveBeenCalledWith(action);
     })
 
-    it('does not add a todo when invalid text is entered', () => {
+    it('should not dispatch ADD_TODO when invalid text is entered', () => {
       var spy = expect.createSpy();
-      var addTodoForm = TestUtils.renderIntoDocument(<AddTodoForm onAddTodo={spy} />);
+      var addTodoForm = TestUtils.renderIntoDocument(<AddTodoForm dispatch={spy} />);
       var $el = $(ReactDOM.findDOMNode(addTodoForm));
       addTodoForm.refs.text.value = '   ';
       TestUtils.Simulate.submit($el.find('form')[0])
