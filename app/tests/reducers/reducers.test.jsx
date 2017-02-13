@@ -41,6 +41,23 @@ describe('Reducers', () => {
       expect(res.length).toBe(1)
       expect(res[0].text).toEqual(action.text)
     })
+    
+    it('bulk adds an array of todo', () => {
+      var action = {
+        type: 'ADD_TODOS',
+        todos: [{
+          id: 11, 
+          text: 'Todo 11',
+          completed: false,
+          completedAt: undefined,
+          createdAt: 3000
+        }]
+      }
+
+      var res = reducers.todosReducer(df([]), df(action))
+      expect(res.length).toBe(1)
+      expect(res[0]).toEqual(action.todos[0])
+    })
 
     it('toggles a todo', () => {
       var action = {
