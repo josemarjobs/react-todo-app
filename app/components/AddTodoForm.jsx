@@ -13,7 +13,7 @@ export var AddTodoForm = React.createClass({
       return;
     }
     this.refs.text.value = '';
-    dispatch(actions.addTodo(text));
+    dispatch(actions.startAddTodo(text));
   },
 
   render: function() {
